@@ -18,6 +18,8 @@ and, when the answer is no:
 
 Both users have the same permissions.
 
+All budgets, balances, goals, debts, available-to-spend calculations, and dashboard totals represent the household as a whole. The application records who entered or changed data for audit and optional history filtering, not for separate member budgets.
+
 Users can:
 
 - View all household financial data.
@@ -122,13 +124,18 @@ Required fields:
 Optional fields:
 
 - Account/card used.
+- Merchant/payee.
 - Notes.
+- Purchase date, defaulting to today.
 
 Requirements:
 
 - Purchases update budgets immediately.
 - One purchase maps to one category in V1.
 - Mobile quick-add must be low-friction.
+- The last-used enabled account/card is preselected per member but may be removed.
+- Merchant/payee, notes, and date changes remain available without slowing the default two-field flow.
+- After save, the sheet closes, totals refresh, and a short-lived undo action voids rather than deletes the transaction.
 
 ### 4.6 Bills
 
@@ -174,7 +181,10 @@ Subscriptions are fixed expenses but require special planning behavior.
 Requirements:
 
 - Users can toggle subscriptions off in scenarios.
+- A scenario subscription toggle has an effective cancellation date and excludes only unpaid occurrences on or after that date.
+- Already-paid charges remain actual spending.
 - The app shows monthly and annual savings impact.
+- Annualized savings sum the subscription's actual recurrence schedule over the following 12 months.
 - The app may suggest where freed-up money could go.
 
 ### 4.9 Goals and Sinking Funds
@@ -198,6 +208,8 @@ Requirements:
 - Show monthly contribution.
 - Show estimated completion date.
 - Calculate required monthly contribution when a target date exists.
+- Every V1 goal and sinking fund represents genuinely reserved cash and reduces available-to-spend.
+- Informational targets that do not reserve cash are out of V1 scope.
 
 ### 4.10 Debt Planner
 
@@ -210,6 +222,8 @@ Debt fields should include:
 - Minimum payment.
 - Current payment.
 - Estimated payoff date.
+
+When an amortizing payment cannot be split into principal and interest from known data, V1 treats the full payment as a fixed budget outflow and relies on the next manual liability balance observation. It must not guess a principal reduction.
 
 Future requirements:
 
